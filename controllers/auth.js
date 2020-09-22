@@ -3,14 +3,14 @@ const CustomError = require("../helpers/error/CustomError");
 const asyncErrorWrapper = require("express-async-handler");
 
 const register = asyncErrorWrapper(async (req, res, next) => {
-  const name = "tacettin kustu";
-  const email = "tt@gmail.com";
-  const password = "12345";
+
+  const{name,email,password,role} = req.body;
 
   const user = await User.create({
     name,
     email,
     password,
+    role
   });
 
   res.status(200).json({
@@ -20,7 +20,7 @@ const register = asyncErrorWrapper(async (req, res, next) => {
 });
 
 const errorTest = (req, res, next) => {
-  return next(new TypeError("Type error message"));
+  return next(new CustomError("Type error message"));
 };
 
 module.exports = {
