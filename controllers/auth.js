@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const CustomError = require("../helpers/error/CustomError");
 const asyncErrorWrapper = require("express-async-handler");
+const {generateJWTFromUser} = require("../models/User")
 
 const register = asyncErrorWrapper(async (req, res, next) => {
 
@@ -12,6 +13,9 @@ const register = asyncErrorWrapper(async (req, res, next) => {
     password,
     role
   });
+
+  const token =user.generateJWTFromUser();
+  console.log(token);
 
   res.status(200).json({
     success: true,
