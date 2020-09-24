@@ -1,7 +1,8 @@
 const User = require("../models/User");
 const CustomError = require("../helpers/error/CustomError");
 const asyncErrorWrapper = require("express-async-handler");
-const {generateJWTFromUser} = require("../models/User")
+const {generateJWTFromUser} = require("../models/User");
+const sendJwtToClient =require("../helpers/authorization/sendJwtToClient")
 
 const register = asyncErrorWrapper(async (req, res, next) => {
 
@@ -14,13 +15,7 @@ const register = asyncErrorWrapper(async (req, res, next) => {
     role
   });
 
-  const token =user.generateJWTFromUser();
-  console.log(token);
-
-  res.status(200).json({
-    success: true,
-    data: user,
-  });
+  sendJwtToClient(user,res);
 });
 
 const errorTest = (req, res, next) => {
