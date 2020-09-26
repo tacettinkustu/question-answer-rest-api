@@ -8,14 +8,17 @@ const {
 const getAccessToRoute = (req, res, next) => {
   const { JWT_SECRET_KEY } = process.env;
   if (!isTokenIncluded(req)) {
-    return next(new CustomError("You are nor authorized", 401));
+    return next(new CustomError("You are not authorized for now", 401));
   }
   const access_token = getAccessTokenFromHeader(req);
   jwt.verify(access_token, JWT_SECRET_KEY, (err, decoded) => {
     if (err) {
       return next(new CustomError("You are not authorized", 401));
     }
-    console.log(decoded);
+    req.user ={
+      id:decoded.id,
+      name:decoded.name,
+    }
     next();
   });
   
