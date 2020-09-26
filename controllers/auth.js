@@ -39,14 +39,17 @@ const login = asyncErrorWrapper(async (req, res, next) => {
 const logout = asyncErrorWrapper(async (req, res, next) => {
   const { NODE_ENV } = process.env;
 
-  return res.status(200).cookie({
-    httpOnly: true,
-    expires: new Date(Date.now()),
-    secure: NODE_ENV === "development" ? false : true,
-  }).json({
-    success:true,
-    message:"Logout successful"
-  });
+  return res
+    .status(200)
+    .cookie({
+      httpOnly: true,
+      expires: new Date(Date.now()),
+      secure: NODE_ENV === "development" ? false : true,
+    })
+    .json({
+      success: true,
+      message: "Logout successful",
+    });
 });
 
 const getUser = (req, res, next) => {
@@ -59,9 +62,29 @@ const getUser = (req, res, next) => {
   });
 };
 
+const imageUpload = asyncErrorWrapper(async (req, res, next) => {
+  const user = await User.findByIdAndUpdate(
+    req.user.id,
+    {
+      profile_image: req.savedProfileImage,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+    message: "Image upload successful",
+    data:user,
+  });
+});
+
 module.exports = {
   register,
   getUser,
   login,
   logout,
+  imageUpload,
 };
