@@ -80,6 +80,24 @@ const imageUpload = asyncErrorWrapper(async (req, res, next) => {
     data:user,
   });
 });
+const forgotPassword = asyncErrorWrapper(async (req, res, next) => {
+
+  const resetEmail = req.body.email;
+  const user = await User.findOne({email: resetEmail});
+
+  if(!user){
+    return next(new CustomError("This email doesn't exist",400))
+  }
+  const resetPasswordToken = user.getResetPasswordTokenFromUser();
+
+  await user.save();
+
+  res.json({
+    success:true,
+    message:"Token sent to your email"
+  })
+
+})
 
 module.exports = {
   register,
@@ -87,4 +105,5 @@ module.exports = {
   login,
   logout,
   imageUpload,
+  forgotPassword,
 };
