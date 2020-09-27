@@ -1,5 +1,14 @@
 const express = require("express");
-const { register, getUser, login, logout,imageUpload,forgotPassword,resetPassword} = require("../controllers/auth");
+const {
+  register,
+  getUser,
+  login,
+  logout,
+  imageUpload,
+  forgotPassword,
+  resetPassword,
+  editDetails,
+} = require("../controllers/auth");
 const { getAccessToRoute } = require("../middlewares/authorization/auth");
 const profileImageUpload = require("../middlewares/libraries/profileImageUpload");
 
@@ -14,7 +23,8 @@ router.post(
   [getAccessToRoute, profileImageUpload.single("profile_image")],
   imageUpload
 );
-router.post("/forgotpassword",forgotPassword)
-router.put("/resetpassword",resetPassword)
+router.post("/forgotpassword", forgotPassword);
+router.put("/resetpassword", resetPassword);
+router.put("/edit",getAccessToRoute, editDetails)
 
 module.exports = router;
