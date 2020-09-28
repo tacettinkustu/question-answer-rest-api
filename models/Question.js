@@ -36,17 +36,17 @@ const QuestionSchema = new Schema({
     ref: "User",
     required: true,
   },
-  //   answerCount: {
-  //     type: Number,
-  //     default: 0,
-  //   },
+    answerCount: {
+      type: Number,
+      default: 0,
+    },
 
-  //   answers: [
-  //     {
-  //       type: mongoose.Schema.ObjectId,
-  //       ref: "Answer",
-  //     },
-  //   ],
+    answers: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Answer",
+      },
+    ],
 });
 
 QuestionSchema.pre("save", function (next) {
