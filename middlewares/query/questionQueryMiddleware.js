@@ -1,4 +1,3 @@
-const { query } = require("express");
 const asyncErrorWrapper = require("express-async-handler");
 const {
   searchHelper,
@@ -19,7 +18,9 @@ const questionQueryMiddleWare = function (model, options) {
 
     query = questionSortHelper(query, req);
 
-    const paginationResult = await paginationHelper(model, query, req);
+
+    const total = await model.countDocuments();
+    const paginationResult = await paginationHelper(total, query, req);
 
     query = paginationResult.query;
     const pagination = paginationResult.pagination;
