@@ -1,5 +1,5 @@
 # question-answer-rest-api
-**A Very Basic Rest Api Practice**
+**A Basic Rest Api Toy Project**
 
 Getting started
 To get the Node server running locally:
