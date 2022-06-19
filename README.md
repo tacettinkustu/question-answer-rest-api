@@ -1,10 +1,10 @@
 # question-answer-rest-api
 **A Basic Rest Api Toy Project**
 
-Getting started
+### Getting started
 To get the Node server running locally:
 
-Clone this repo
+### Clone this repo
 npm install to install all required dependencies
 Create MongoDb Cluster and Get Connection MongoDb URI
 Set environment variables in config.env under ./config/env
